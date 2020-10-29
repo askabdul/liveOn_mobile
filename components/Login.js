@@ -1,12 +1,11 @@
 import React from "react";
-
-import { TextInput, View, Text, TouchableOpacity} from "react-native";
+import { TextInput, View, Text, TouchableOpacity, StyleSheet} from "react-native";
 import { Button } from "native-base"
 
 
 export default function Login({navigation}) {
   return (
-    <View style={{backgroundColor: "#F0EFEF", flex: 1, alignItems: "center", justifyContent: "space-evenly"}}>
+    <View style={styles.container}>
       <View>
         <Text style={{color: "#2DC2A9", fontSize: 32}}>WELCOME !</Text>
       </View>
@@ -36,3 +35,13 @@ export default function Login({navigation}) {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#F0EFEF",
+    alignItems: "center", 
+    justifyContent: "space-evenly"
+  }
+})
+

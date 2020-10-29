@@ -4,11 +4,11 @@ import { Container, Header, Content, List, ListItem, Text, Icon, Button, Body, T
 export default function Cases() {
     return (
       <Container>
-        <Header>
+        {/* <Header>
             <Body>
                 <Title style={{color: "#2DC2A9", fontSize: 22}}>Reported Cases</Title>
           </Body>
-        </Header>
+        </Header> */}
         <Content>
           <List>
             <ListItem style={{flexDirection: "row" ,justifyContent: "space-between"}}>
