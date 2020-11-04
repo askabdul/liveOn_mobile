@@ -5,13 +5,19 @@ import { NavigationContainer } from '@react-navigation/native';
 export default function Cases({navigation}) {
     return (
       <Container>
+<<<<<<< HEAD
         <Header>
           <Body>
             <Title style={{color: '#2DC2A9', fontSize: 22}}>
               Reported Cases
             </Title>
+=======
+        {/* <Header>
+            <Body>
+                <Title style={{color: "#2DC2A9", fontSize: 22}}>Reported Cases</Title>
+>>>>>>> ce90186ce3ea34ac6b9a65055012796cb79be904
           </Body>
-        </Header>
+        </Header> */}
         <Content>
           <List>
             <ListItem
