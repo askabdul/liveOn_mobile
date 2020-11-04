@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Content, Footer, FooterTab, Button, Icon, Badge } from 'native-base';
 
-import { View, Text } from "react-native"
+import { View, Text, StyleSheet} from "react-native"
 import DrawerContent from "./DrawerContent"
 
 export default function Settings() {
