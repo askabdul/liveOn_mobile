@@ -14,7 +14,7 @@ export default function App() {
   return(
     <NavigationContainer>
       <RootStack.Navigator initialRouteName="Login">
-        <RootStack.Screen name="Login" component= {Login} options={{title: "SignIN"}}/>
+        <RootStack.Screen name="Login" component= {Login}/>
         <RootStack.Screen name="Signup" component= {Signup} />
         <RootStack.Screen name="Verify" component= {Verify} />
         <RootStack.Screen name="MainApp" component= {Main} />

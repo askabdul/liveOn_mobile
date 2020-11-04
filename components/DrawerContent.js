@@ -1,56 +1,84 @@
-import React from "react";
+// import React from "react";
 
-import { createDrawerNavigator } from "@react-navigation/drawer"
-import Cases from "./Cases";
-import MainApp from "./MainApp"
-
-
-const AppDrawer = createDrawerNavigator()
-const AppDrawerScreen = () => (
-  <AppDrawer.Navigator>
-    <AppDrawer.Screen name="Cases" component={Cases} />
-  </AppDrawer.Navigator>
-)
-
-export default <AppDrawerScreen />
+// import { Button, View } from 'react-native';
+// import { createDrawerNavigator } from '@react-navigation/drawer';
+// import { NavigationContainer } from '@react-navigation/native';
+// import Main from "./MainApp"
+// import Verify from "./Verify"
+// const Drawer = createDrawerNavigator();
 
 
-
-// import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity} from "react-native"
-// import { Icons } from "native-base"
-// import {DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
-
-// export default class DrawerContent extends React.Component {
-//     render(){
-//         return (
-//             <View style={styles.container}>
-//                 <SafeAreaView style={{flex: 1}}>
-//                     <TouchableOpacity style={{alignItems: "flex-end", margin: 16}}
-//                     onPress={this.props.navigation.openDrawer}>
-//                         <Icons type="FontAwesome" name="bars" size={24} color="#16192"/>
-//                     </TouchableOpacity>
-//                     <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
-//                         <Text style={styles.text}>
-//                             {this.props.name} Screen
-//                         </Text>
-//                     </View>
-//                 </SafeAreaView>
-//             </View>
-//         )
+// export default function DrawerContent() {
+//     return (
+//             <Drawer.Screen name="Screen" component={Verify} />
+//       );
 //     }
-// }
-
-
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//         backgroundColor: "#ffffff"
-//     },
-
-//     text: {
-//         color: "skyblue",
-//         fontSize: 20,
-//         fontWeight: "500"
-//     }
-// })
-
+    
+   
+import React from 'react'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import MenuDrawer from 'react-native-side-drawer'
+ 
+export default class Example extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false
+    };
+  }
+ 
+  toggleOpen = () => {
+    this.setState({ open: !this.state.open });
+  };
+ 
+  drawerContent = () => {
+    return (
+      <View>
+      <TouchableOpacity onPress={this.toggleOpen} style={styles.animatedBox}>
+        <Text>Close</Text>
+      </TouchableOpacity>
+      </View>
+    );
+  };
+ 
+  render() {
+    return (
+      <View style={styles.container}>
+        <MenuDrawer 
+          open={this.state.open} 
+          drawerContent={this.drawerContent()}
+          drawerPercentage={60}
+          animationTime={250}
+          overlay={true}
+          opacity={0.4}
+        >
+          <TouchableOpacity onPress={this.toggleOpen} style={styles.body}>
+            <Text>Open</Text>
+          </TouchableOpacity>
+        </MenuDrawer>
+      </View>
+    );
+  }
+}
+ 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 30,
+    zIndex: 0
+  },
+  animatedBox: {
+    flex: 1,
+    backgroundColor: "#38C8EC",
+    padding: 10
+  },
+  body: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'gray'
+  }
+})
