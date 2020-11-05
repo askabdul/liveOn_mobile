@@ -33,11 +33,9 @@ export default class Example extends React.Component {
  
   drawerContent = () => {
     return (
-      <View>
       <TouchableOpacity onPress={this.toggleOpen} style={styles.animatedBox}>
         <Text>Close</Text>
       </TouchableOpacity>
-      </View>
     );
   };
  
@@ -67,12 +65,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 30,
+    // marginTop: 30,
     zIndex: 0
   },
   animatedBox: {
     flex: 1,
-    backgroundColor: "#38C8EC",
+    backgroundColor: "#ffffff",
     padding: 10
   },
   body: {

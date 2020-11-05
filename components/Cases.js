@@ -11,7 +11,7 @@ export default function Cases({navigation}) {
               Reported Cases
             </Title>
           </Body>
-        </Header> 
+        </Header>
         <Content>
           <List>
             <ListItem
@@ -19,7 +19,7 @@ export default function Cases({navigation}) {
               <Text>Accident at Circle</Text>
               <View>
                 <Button
-                onPress={() => navigation.navigate("Tracking")}
+                  onPress={() => navigation.navigate('Tracking')}
                   rounded
                   light
                   style={{width: 81, height: 30, border: 'red'}}>

@@ -16,6 +16,7 @@ function Incident({navigation}) {
         <View>
           <UserAvatar
           imageStyle={{backgroundColor: "red", width: 300}}
+          style={{backgroundColor: "red", width: 300}}
             size={300}
             name="Avishay Bar"
             src="https://dummyimage.com/100x100/000/fff"

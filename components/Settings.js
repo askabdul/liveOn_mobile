@@ -1,14 +1,14 @@
 import React from "react";
 import { Container, Content, Footer, FooterTab, Button, Icon, Badge } from 'native-base';
 
-import { View, Text, StyleSheet} from "react-native"
-import DrawerContent from "./DrawerContent"
+import { View, Text, StyleSheet, TouchableOpacity} from "react-native"
 
-export default function Settings() {
+export default function Settings({navigation}) {
     return (
-        <View>
-            <Text>fdfdfgdf</Text>
-        </View>
+        <TouchableOpacity
+        onPress={() => navigation.navigate("DrawerContent")}>
+            <Text>This display is for the settings page</Text>
+        </TouchableOpacity>
     )
 }
 const styles = StyleSheet.create({
