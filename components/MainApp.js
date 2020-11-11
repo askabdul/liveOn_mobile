@@ -39,7 +39,7 @@ const CasesStack = createStackNavigator();
 
 function CasesStackScreen() {
   return (
-    <CasesStack.Navigator>
+    <CasesStack.Navigator initialRouteName="Cases">
       <CasesStack.Screen
         name=" Cases"
         component={Cases}
@@ -56,6 +56,7 @@ function Main() {
   return (
     <Tabs.Navigator
       screenOptions={({route}) => ({
+         color : "red",
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
 

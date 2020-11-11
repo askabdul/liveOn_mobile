@@ -18,7 +18,7 @@ function Home({navigation}) {
           }}>
           <Button
             vertical
-            style={{backgroundColor: 'white', padding: 40, margin: 10}}>
+            style={{backgroundColor: 'white', padding: 30, margin: 10}}>
             <Icon
               name="home"
               type="FontAwesome"
@@ -28,7 +28,7 @@ function Home({navigation}) {
           </Button>
           <Button
             vertical
-            style={{backgroundColor: 'white', padding: 40, margin: 10}}
+            style={{backgroundColor: 'white', padding: 30, margin: 10}}
             onPress={() => navigation.navigate('Incident')}>
             <Icon
               name="plus-square"
@@ -39,7 +39,7 @@ function Home({navigation}) {
           </Button>
           <Button
             vertical
-            style={{backgroundColor: 'white', padding: 40, margin: 10}}>
+            style={{backgroundColor: 'white', padding: 30, margin: 10}}>
             <Icon
               active
               name="list"
@@ -50,7 +50,7 @@ function Home({navigation}) {
           </Button>
           <Button
             vertical
-            style={{backgroundColor: 'white', padding: 40, margin: 10}}>
+            style={{backgroundColor: 'white', padding: 30, margin: 10}}>
             <Icon
               name="cog"
               type="FontAwesome"

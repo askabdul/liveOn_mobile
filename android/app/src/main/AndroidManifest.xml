@@ -2,14 +2,15 @@
   package="com.liveon_frontend">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    
     <application
       android:name=".MainApplication"
       android:label="@string/app_name"
       android:icon="@mipmap/ic_launcher"
       android:roundIcon="@mipmap/ic_launcher_round"
       android:allowBackup="false"
-      android:theme="@style/AppTheme">
+      android:theme="@style/AppTheme"
+      android:windowSoftInputMode="adjustResize">
       <meta-data
      android:name="com.google.android.geo.API_KEY"
      android:value="AIzaSyCuzBwcA4cVXVulDmYiHkZ1_xyLSYITsp4"/>

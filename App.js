@@ -6,6 +6,7 @@ import Signup from './components/Signup';
 import Verify from './components/Verify';
 import Main from './components/MainApp';
 import Splash from './components/Splash';
+import { Root } from 'native-base';
 // import Home from './components/Home';
 // import Incident from './components/Incident';
 
@@ -13,6 +14,7 @@ const RootStack = createStackNavigator();
 
 export default function App() {
   return (
+    <Root>
     <NavigationContainer>
       <RootStack.Navigator initialRouteName="Splash">
         <RootStack.Screen
@@ -44,5 +46,6 @@ export default function App() {
         <RootStack.Screen name="Incident" component= {Incident} /> */}
       </RootStack.Navigator>
     </NavigationContainer>
+  </Root>
   );
 }

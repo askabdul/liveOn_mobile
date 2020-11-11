@@ -5,10 +5,13 @@ import { View, Text, StyleSheet, TouchableOpacity} from "react-native"
 
 export default function Settings({navigation}) {
     return (
-        <TouchableOpacity
-        onPress={() => navigation.navigate("DrawerContent")}>
-            <Text>This display is for the settings page</Text>
-        </TouchableOpacity>
+        <View style={{flex:1, alignItems: "center", justifyContent: "center"}}>
+        
+            <TouchableOpacity
+            onPress={() => navigation.navigate("DrawerContent")}>
+                <Text>This display is for the settings page</Text>
+            </TouchableOpacity>
+        </View>
     )
 }
 const styles = StyleSheet.create({

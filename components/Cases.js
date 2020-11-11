@@ -1,7 +1,6 @@
 import React from 'react';
 import { View } from "react-native";
 import { Container, Header, Content, List, ListItem, Text, Icon, Button, Body, Title } from 'native-base';
-import { NavigationContainer } from '@react-navigation/native';
 export default function Cases({navigation}) {
     return (
       <Container>
