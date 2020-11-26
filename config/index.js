@@ -1,4 +1,4 @@
-const dev = `http://localhost:3000/api/`
+const dev = `http://10.0.2.2:3000/api/`
 export default {
 	baseUrl: dev,
 	// google: {

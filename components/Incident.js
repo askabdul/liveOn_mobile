@@ -1,6 +1,8 @@
 import React from "react";
 import { Container, Content, Button, Icon, Text, List, ListItem, Toast } from 'native-base';
 import { StyleSheet, View, Modal, TouchableOpacity, TouchableHighlight} from "react-native"
+import Geolocation from "@react-native-community/geolocation";
+
 import UserAvatar from 'react-native-user-avatar';
 import services from "./../services";
 import ImagePicker from 'react-native-image-picker';
@@ -13,11 +15,26 @@ class Incident extends React.Component {
     photo: null,
     modalVisible: false,
     responseUnit: [],
-    proceedBtn: false
+    proceedBtn: false,
+    latitude: 0,
+    longitude: 0,
+    error: null
   }
 
   componentDidMount= () => {
+    Geolocation.getCurrentPosition(position => {
+      const initialPosition = JSON.stringify(position);
+      console.log(position);
+         this.setState({
+             latitude: position.coords.latitude,
+             longitude: position.coords.longitude,
+             error: null
+         })
+     }, error => this.setState({error: error.message}),
+     {enableHighAccuracy: true, timeout: 20000, maximumAge: 2000}
+     );
     this.getResUnit
+    console.log(this.state.latitude);
   }
 
   checkToProceed = () => {
@@ -48,7 +65,6 @@ class Incident extends React.Component {
       path: 'images',
   },
     };
-      this.refs.loading.show()
 
     ImagePicker.showImagePicker(options, Response => {
       // console.log("response = ", Response );

@@ -11,9 +11,9 @@ const Splash = ({navigation}) => {
   }, []);
 
   return (
-    <LinearGradient colors={['#ccc', '#eee']} style={styles.home}>
+    <LinearGradient colors={['#fff', '#fff']} style={styles.home}>
       <Image
-        source={require('./../images/logo2.jpeg')}
+        source={require('./../images/logo4.jpeg')}
         resizeMode="contain"
         style={{width: 200}}
       />

@@ -33,6 +33,7 @@ export default function App() {
           component={Main}
           options={{
             headerShown: false,
+            headerLeft: null
           }}
         />
         <RootStack.Screen
@@ -42,8 +43,6 @@ export default function App() {
             headerShown: false,
           }}
         />
-        {/* <RootStack.Screen name="Home" component= {Home} />
-        <RootStack.Screen name="Incident" component= {Incident} /> */}
       </RootStack.Navigator>
     </NavigationContainer>
   </Root>

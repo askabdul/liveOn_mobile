@@ -18,13 +18,15 @@ function Home({navigation}) {
           }}>
           <Button
             vertical
-            style={{backgroundColor: 'white', padding: 30, margin: 10}}>
+            style={{backgroundColor: 'white', padding: 20, margin: 10}}
+            onPress={() => navigation.navigate('Signs', { screen: 'Home' })}
+            >
             <Icon
               name="home"
               type="FontAwesome"
               style={{color: '#1AA08A', fontSize: 50, padding: 10}}
             />
-            <Text style={styles.iconText}>Home</Text>
+            <Text style={styles.iconText}>Road Signs</Text>
           </Button>
           <Button
             vertical

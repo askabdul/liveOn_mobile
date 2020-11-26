@@ -1,17 +1,8 @@
 import React from 'react';
-import {
-  Container,
-  Content,
-  Footer,
-  FooterTab,
-  Button,
-  Icon,
-  Text,
-  Badge,
-} from 'native-base';
-import {StyleSheet, View} from 'react-native';
+import { Icon } from 'native-base';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import Home from './Home';
 import Incident from './Incident';
@@ -19,8 +10,13 @@ import Settings from './Settings';
 import Cases from './Cases';
 import DrawerContent from './DrawerContent';
 import TrackInfo from './TrackInfo';
+import Signs from './Signs'
 
 const SettingsStack = createStackNavigator();
+const CasesStack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+const HomeStack =createDrawerNavigator();
+
 
 function SettingScreen() {
   return (
@@ -28,14 +24,12 @@ function SettingScreen() {
       <SettingsStack.Screen
         name="Settings"
         component={Settings}
-        options={{headerLeft: null}}
       />
-      <SettingsStack.Screen name="DrawerContent" component={DrawerContent} />
+      {/* <SettingsStack.Screen name="DrawerContent" component={DrawerContent} /> */}
     </SettingsStack.Navigator>
   );
 }
 
-const CasesStack = createStackNavigator();
 
 function CasesStackScreen() {
   return (
@@ -43,10 +37,37 @@ function CasesStackScreen() {
       <CasesStack.Screen
         name=" Cases"
         component={Cases}
-        options={{headerLeft: null}}
+        options={{
+          headerShown: false,
+          headerLeft: null
+        }}
       />
       <CasesStack.Screen name="Tracking" component={TrackInfo} />
     </CasesStack.Navigator>
+  );
+}
+
+
+
+function Homedisplay() {
+  return (
+    <HomeStack.Navigator initialRouteName="Home">
+      <HomeStack.Screen name="Home" component={Home} />
+      <HomeStack.Screen name="Signs" component={Signs}/>
+    </HomeStack.Navigator>
+  )
+}
+
+function Draw() {
+  return (
+      <Drawer.Navigator >
+        <Drawer.Screen name="Settings" component={SettingScreen} 
+        options={{
+          headerShown: false,
+          headerLeft: null
+        }}/>
+        {/* <Drawer.Screen name="Notifications" component={NotificationsScreen} /> */}
+      </Drawer.Navigator>
   );
 }
 
@@ -87,17 +108,17 @@ function Main() {
         activeTintColor: '#1AA08A',
         inactiveTintColor: '#AC9D9D',
       }}>
-      <Tabs.Screen name="Home" component={Home} />
+      <Tabs.Screen
+      initialRouteName="Home" name="Home" component={Homedisplay} />
       <Tabs.Screen name="Incident" component={Incident} />
       <Tabs.Screen
         name="Cases"
         component={CasesStackScreen}
-        options={{headerLeft: null}}
       />
       <Tabs.Screen
+      initialRouteName="Settings"
         name="Settings"
-        component={SettingScreen}
-        options={{headerLeft: null}}
+        component={Draw}
       />
     </Tabs.Navigator>
   );

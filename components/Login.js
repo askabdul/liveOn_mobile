@@ -1,5 +1,5 @@
 import React from "react";
-import { TextInput, View, Text, TouchableOpacity, StyleSheet} from "react-native";
+import { TextInput, View, Text, TouchableOpacity, StyleSheet, KeyboardAvoidingView} from "react-native";
 import { Button, Toast } from "native-base";
 import Loading from 'react-native-whc-loading';
 import services from "./../services";
@@ -44,7 +44,11 @@ export default class Login extends React.Component{
 					AsyncStorage.setItem('User', JSON.stringify(res.data.data))
 					AsyncStorage.setItem('isAuth', 'true')
 					services.axios.defaults.headers.common['Authorization'] = res.data.data.id
-					this.props.navigation.navigate('MainApp')
+          this.props.navigation.navigate('MainApp')
+          this.setState({
+            email: "",
+            password: ""
+          })
 				}
 			}).catch((err) => {
 				this.refs.loading.close()
@@ -67,7 +71,9 @@ export default class Login extends React.Component{
   
   render(){
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView 
+      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+      style={styles.container}>
   				<Loading ref="loading" backgroundColor='transparent' indicatorColor='white' />
         <View>
           <Text style={{color: '#2DC2A9', fontSize: 32}}>WELCOME !</Text>
@@ -149,7 +155,7 @@ export default class Login extends React.Component{
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }

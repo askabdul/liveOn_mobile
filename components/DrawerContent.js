@@ -16,10 +16,17 @@
     
    
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native'
 import MenuDrawer from 'react-native-side-drawer'
  
 export default class Example extends React.Component {
+
+  // static navigationOptions = function (props) {
+  //   return {
+  //     title: "jgjgjg",
+  //     headerLeft: <Button onPress={() => this.props.navigation.navigate(this.toggleOpen)} title="hghfgfg"/>
+  //   }
+  // }
   constructor(props) {
     super(props);
     this.state = {

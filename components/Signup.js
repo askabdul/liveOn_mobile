@@ -1,6 +1,6 @@
 import React from "react";
 
-import { TextInput, View, Text, TouchableOpacity, KeyboardAvoidingView, KeyboardAwareScrollView} from "react-native";
+import { TextInput, View, Text, TouchableOpacity, KeyboardAvoidingView} from "react-native";
 import { Button, Toast } from "native-base"
 import Loading from 'react-native-whc-loading';
 import services from "./../services";
@@ -61,7 +61,14 @@ export default class Register extends React.Component {
 					this.refs.loading.close()
 					AsyncStorage.setItem('User', JSON.stringify(res.data.data))
 					AsyncStorage.setItem('isAuth', 'true')
-					this.props.navigation.navigate('Verify')
+          this.props.navigation.navigate('Verify')
+          this.setState({
+            firstName: '',
+            lastName: '',
+            password: '',
+            email: '',
+            phone: '',
+          });
         }
       }).catch((err) => {
         if(err.response){
@@ -77,7 +84,8 @@ export default class Register extends React.Component {
   
     render () {
       return (
-        <View
+        <KeyboardAvoidingView
+          behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
           style={{
             backgroundColor: '#F0EFEF',
             flex: 1,
@@ -85,9 +93,9 @@ export default class Register extends React.Component {
             justifyContent: 'space-evenly',
           }}>
   				<Loading ref="loading" backgroundColor='transparent' indicatorColor='white' />
-          <View>
+          {/* <View>
             <Text style={{color: '#2DC2A9', fontSize: 32}}>REGISTER</Text>
-          </View>
+          </View> */}
           <View>
             <TextInput
               onChangeText = {(firstName) => this.setState({firstName})}
@@ -99,7 +107,7 @@ export default class Register extends React.Component {
                 height: 51,
                 borderRadius: 8,
                 backgroundColor: '#ffffff',
-                marginBottom: 33,
+                marginBottom: 20,
                 paddingLeft: 20,
               }}
             />
@@ -114,7 +122,7 @@ export default class Register extends React.Component {
                 height: 51,
                 borderRadius: 8,
                 backgroundColor: '#ffffff',
-                marginBottom: 33,
+                marginBottom: 20,
                 paddingLeft: 20,
               }}
             />
@@ -130,7 +138,7 @@ export default class Register extends React.Component {
                 height: 51,
                 borderRadius: 8,
                 backgroundColor: '#ffffff',
-                marginBottom: 33,
+                marginBottom: 20,
                 paddingLeft: 20,
               }}
             />
@@ -145,7 +153,7 @@ export default class Register extends React.Component {
                 height: 51,
                 borderRadius: 8,
                 backgroundColor: '#ffffff',
-                marginBottom: 33,
+                marginBottom: 20,
                 paddingLeft: 20,
               }}
               secureTextEntry
@@ -176,7 +184,7 @@ export default class Register extends React.Component {
               light
               style={{
                 width: 270,
-                height: 55,
+                height: 50,
                 backgroundColor: 'white',
                 color: 'green',
               }}
@@ -185,7 +193,7 @@ export default class Register extends React.Component {
               <Text
                 style={{
                   color: '#1AA08A',
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: 'bold',
                   marginLeft: 90,
                 }}>
@@ -206,7 +214,7 @@ export default class Register extends React.Component {
               </TouchableOpacity>
             </View>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       );
     }
 }
