@@ -1,11 +1,15 @@
 import React from "react";
 import { Button, Icon, Text, List, ListItem, Toast } from 'native-base';
-import { StyleSheet, View, Modal, TouchableOpacity, TouchableHighlight} from "react-native"
+import { StyleSheet, View, Modal, TouchableOpacity, TouchableHighlight, Dimensions} from "react-native"
 import Geolocation from "@react-native-community/geolocation";
 import UserAvatar from 'react-native-user-avatar';
 import services from "./../services";
 import ImagePicker from 'react-native-image-picker';
 import Loading from 'react-native-whc-loading';
+const { width, height } = Dimensions.get("window");
+const ASPECT_RATIO = width / height;
+const LATITUDE_DELTA = 0.0922;
+const LONGITUDE_DELTA = ASPECT_RATIO * LATITUDE_DELTA
 
 
 class Incident extends React.Component {
@@ -14,27 +18,37 @@ class Incident extends React.Component {
     photo: null,
     modalVisible: false,
     responseUnit: [],
+    unitId: "",
     proceedBtn: false,
-    latitude: 0,
-    longitude: 0,
-    error: null,
+    initialRegion: {
+      latitude: 0,
+      longitude: 0,
+      latitudeDelta: 0,
+      longitudeDelta: 0
+  },
     img: "",
   }
 
-  componentDidMount= () => {
+  componentDidMount = () => {
     Geolocation.getCurrentPosition(position => {
-      const initialPosition = JSON.stringify(position);
-      alert(JSON.stringify(position))
-         this.setState({
-             latitude: position.coords.latitude,
-             longitude: position.coords.longitude,
-             error: null
-         })
-     }, error => console.log(error),
-     {enableHighAccuracy: true, timeout: 20000, maximumAge: 2000}
-     );
+        const lat = parseFloat(position.coords.latitude)
+        const lng = parseFloat(position.coords.longitude)
+        // console.log(position);
+       this.setState({
+           initialRegion : {
+               latitude: lat,
+               longitude: lng,
+               latitudeDelta: LATITUDE_DELTA,
+               longitudeDelta: ASPECT_RATIO * LATITUDE_DELTA
+           }
+       })
+      //  console.log(this.state);
+       
+    }, error => console.log(error),
+    {enableHighAccuracy: true, timeout: 20000, maximumAge: 2000}
+    );
     this.getResUnit
-  }
+}
 
   checkToProceed = () => {
     if(this.state.photo == null) {
@@ -73,33 +87,57 @@ class Incident extends React.Component {
 
       formdata.append("file", {uri: photo.uri, name: 'photo.jpg', type: 'image/jpeg'})
       console.log(formdata);
-      services.axios.post(services.endpoints.POST_IMG, {
-        file: formdata,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        }
-      }).then((res) => {
-        if(res.data) {
-          console.log(res);
-        }
-      }).catch((err) => {
-        if(err) {
-          console.log(err)
-        }
-      })
+      // services.axios.post(services.endpoints.POST_IMG, {
+      //   file: formdata,
+      //   headers: {
+      //     'Content-Type': 'multipart/form-data',
+      //   }
+      // }).then((res) => {
+      //   if(res.data) {
+      //     console.log(res);
+      //   }
+      // }).catch((err) => {
+      //   if(err) {
+      //     console.log(err)
+      //   }
+      // })
      
 
       if(Response.uri) {
         this.setState({
-          photo: Response
+          photo: Response,
+          proceedBtn: true
         })
-      this.setState({
-      proceedBtn: true
-      })
       this.refs.loading.close()
       }
     })
    
+  }
+
+  sendCase = () => {
+    services.axios.post(services.endpoints.SEND_CASE, {
+      location: {
+        lat: this.state.initialRegion.latitude,
+        lng: this.state.initialRegion.longitude
+      },
+      unitId: this.state.unitId
+    }).then((res) => {
+      if(res.data) {
+      this.refs.loading.show()
+      this.setState({
+        photo: null,
+        modalVisible: false,
+        proceedBtn: false
+      })
+      this.refs.loading.close()
+      Toast.show({
+        text: "Sent Succesfully",
+        position: "top",
+        type: "success",
+        duration: 5000
+      })
+      }
+    })
   }
 
   getResUnit = () => {
@@ -111,6 +149,9 @@ class Incident extends React.Component {
       }
         this.state.responseUnit.map((unit) => {
           console.log(unit);
+          this.setState({
+            unitId: unit.id
+          })
         })
     }).catch((err) => {
       if(err.response) {
@@ -174,7 +215,11 @@ class Incident extends React.Component {
           <Button
             vertical
             style={{backgroundColor: 'white', margin: 10}}
-            onPress={this.handleChoosePhoto}>
+            onPress={
+              this.handleChoosePhoto
+              // this.sendCase
+              // this.getResUnit
+              }>
             <Icon
               name="camera"
               type="FontAwesome"
@@ -231,7 +276,7 @@ class Incident extends React.Component {
                       justifyContent: 'space-between',
                     }}>
                     {this.state.responseUnit.map((unit) => (
-                      <TouchableOpacity key={unit.id} onPress={this.send}>
+                      <TouchableOpacity key={unit.id} onPress={this.sendCase}>
                         <Text style={{marginVertical: 5}}>{unit.name}</Text>
                       </TouchableOpacity>
                     ))}

@@ -16,7 +16,7 @@ import {Icon } from "native-base";
 import { log } from "react-native-reanimated";
 const { width, height } = Dimensions.get("window");
 const ASPECT_RATIO = width / height;
-const LATITUDE_DELTA = 0.03;
+const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = ASPECT_RATIO * LATITUDE_DELTA
 
 
@@ -44,7 +44,7 @@ export default class TrackInfo extends React.Component {
                    latitude: lat,
                    longitude: lng,
                    latitudeDelta: LATITUDE_DELTA,
-                   longitudeDelta: LONGITUDE_DELTA
+                   longitudeDelta: ASPECT_RATIO * LATITUDE_DELTA
                }
            })
            console.log(this.state);

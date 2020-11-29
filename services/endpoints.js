@@ -10,5 +10,6 @@ export default {
 	SIGNUP: baseUrl + 'userAccounts/user-signup',
 	GETRESUNIT: baseUrl + "ResponseUnits",
 	POST_CASE: baseUrl + 'cases',
-	POST_IMG: baseUrl + 'Storages/accident-imgs/upload'
+	POST_IMG: baseUrl + 'Storages/accident-imgs/upload',
+	SEND_CASE: baseUrl + 'Cases/add-case'
 }
