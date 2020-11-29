@@ -15,7 +15,7 @@ const Splash = ({navigation}) => {
       <Image
         source={require('./../images/logo4.jpeg')}
         resizeMode="contain"
-        style={{width: 200}}
+        style={{width: 400, height: 400}}
       />
     </LinearGradient>
   );

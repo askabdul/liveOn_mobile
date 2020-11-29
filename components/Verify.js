@@ -119,7 +119,7 @@ class Verify extends React.Component {
           value={pin4}/>
         </View>
         <View style={{marginVertical: 50}}>
-          <Button
+          {/* <Button
             bordered
             light
             style={{
@@ -135,7 +135,7 @@ class Verify extends React.Component {
               Confirm
               <Icon name='arrow-right' type="FontAwesome" />
             </Text>
-          </Button>
+          </Button> */}
           <TouchableOpacity style={{alignSelf: 'center'}}>
             <Text style={{color: '#AC9D9D'}}>Generate new code</Text>
           </TouchableOpacity>

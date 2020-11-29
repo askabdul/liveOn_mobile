@@ -1,8 +1,7 @@
 import React from "react";
-import { Container, Content, Button, Icon, Text, List, ListItem, Toast } from 'native-base';
+import { Button, Icon, Text, List, ListItem, Toast } from 'native-base';
 import { StyleSheet, View, Modal, TouchableOpacity, TouchableHighlight} from "react-native"
 import Geolocation from "@react-native-community/geolocation";
-
 import UserAvatar from 'react-native-user-avatar';
 import services from "./../services";
 import ImagePicker from 'react-native-image-picker';
@@ -18,29 +17,29 @@ class Incident extends React.Component {
     proceedBtn: false,
     latitude: 0,
     longitude: 0,
-    error: null
+    error: null,
+    img: "",
   }
 
   componentDidMount= () => {
     Geolocation.getCurrentPosition(position => {
       const initialPosition = JSON.stringify(position);
-      console.log(position);
+      alert(JSON.stringify(position))
          this.setState({
              latitude: position.coords.latitude,
              longitude: position.coords.longitude,
              error: null
          })
-     }, error => this.setState({error: error.message}),
+     }, error => console.log(error),
      {enableHighAccuracy: true, timeout: 20000, maximumAge: 2000}
      );
     this.getResUnit
-    console.log(this.state.latitude);
   }
 
   checkToProceed = () => {
     if(this.state.photo == null) {
       Toast.show({
-				text: "please take or pic photo",
+				text: "please take or pick photo",
 				position: "bottom",
         type: "warning",
 			})
@@ -63,11 +62,32 @@ class Incident extends React.Component {
     storageOptions: {
       skipBackup: true,
       path: 'images',
-  },
-    };
+    },
+  };
 
     ImagePicker.showImagePicker(options, Response => {
-      // console.log("response = ", Response );
+      // console.log("response = ", Response.uri );
+
+      let photo = { uri: Response.uri}
+      let formdata = new FormData();
+
+      formdata.append("file", {uri: photo.uri, name: 'photo.jpg', type: 'image/jpeg'})
+      console.log(formdata);
+      services.axios.post(services.endpoints.POST_IMG, {
+        file: formdata,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        }
+      }).then((res) => {
+        if(res.data) {
+          console.log(res);
+        }
+      }).catch((err) => {
+        if(err) {
+          console.log(err)
+        }
+      })
+     
 
       if(Response.uri) {
         this.setState({
@@ -75,8 +95,8 @@ class Incident extends React.Component {
         })
       this.setState({
       proceedBtn: true
-    })
-    this.refs.loading.close()
+      })
+      this.refs.loading.close()
       }
     })
    
@@ -92,12 +112,16 @@ class Incident extends React.Component {
         this.state.responseUnit.map((unit) => {
           console.log(unit);
         })
+    }).catch((err) => {
+      if(err.response) {
+        console.log(err);
+      }
     })
   }
 
   send = () => {
     Toast.show({
-				text: "Succesfull",
+				text: "Sent Succesfully",
 				position: "top",
         type: "success",
 			})
@@ -124,108 +148,106 @@ class Incident extends React.Component {
           justifyContent: 'space-evenly',
           alignItems: 'center',
         }}>
-  				<Loading ref="loading" backgroundColor='transparent' indicatorColor='white' />
-
-        {/* <Header Title="this is it"/> */}
+        <Loading
+          ref="loading"
+          backgroundColor="transparent"
+          indicatorColor="white"
+        />
         <View>
-        {photo && (
-          <UserAvatar
-          imageStyle={{backgroundColor: "red", width: 300, height: 300, borderRadius: 20,
-          shadowRadius: 10,
-          shadowOpacity: 0.2,}}
-            size={300}
-            name="Avishay Bar"
-            src={photo.uri}
-            // style={{
-            //   borderRadius: 0,
-            //   shadowRadius: 10,
-            //   shadowOpacity: 0.2,
-            // }}
-          />
-
-        )}
+          {photo && (
+            <UserAvatar
+              imageStyle={{
+                backgroundColor: 'red',
+                width: 300,
+                height: 300,
+                borderRadius: 20,
+                shadowRadius: 10,
+                shadowOpacity: 0.2,
+              }}
+              size={300}
+              name="Avishay Bar"
+              src={photo.uri}
+            />
+          )}
         </View>
         <View>
-        {/* <Text>click to add photo</Text> */}
-          <Button vertical style={{backgroundColor: 'white', margin: 10}}
-          onPress={this.handleChoosePhoto}>
+          <Button
+            vertical
+            style={{backgroundColor: 'white', margin: 10}}
+            onPress={this.handleChoosePhoto}>
             <Icon
               name="camera"
               type="FontAwesome"
               style={{
                 color: '#1AA08A',
                 fontSize: 30,
-                padding: 30,
-                marginTop: 30,
+                padding: 20,
+                marginVertical: 30,
               }}
             />
           </Button>
         </View>
         <View>
-        {
-              this.state.proceedBtn && (
-                <Button
-            rounded
-            light
-            onPress={() => {
-              this.checkToProceed()
-            }}
-            style={{
-              width: 270,
-              height: 55,
-              backgroundColor: 'white',
-              color: 'green',
-            }}>
-
-            
-            <Text
+          {this.state.proceedBtn && (
+            <Button
+              rounded
+              light
+              onPress={() => {
+                this.checkToProceed();
+              }}
               style={{
-                color: '#1AA08A',
-                fontSize: 20,
-                fontWeight: 'bold',
-                marginLeft: 80,
+                width: 270,
+                height: 55,
+                backgroundColor: 'white',
+                color: 'green',
               }}>
-              Proceed
-            </Text>
-          </Button>
-              )
-        }
-          
+              <Text
+                style={{
+                  color: '#1AA08A',
+                  fontSize: 20,
+                  fontWeight: 'bold',
+                  marginLeft: 80,
+                }}>
+                Proceed
+              </Text>
+            </Button>
+          )}
         </View>
-        <View >
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-          }}
-        >
-          <View style={styles.modalView}>
-            <View>
-              <List>
-                <ListItem
-                  style={{flexDirection: 'column', justifyContent: 'space-between'}}>
-                  {this.state.responseUnit.map((unit) => (
-                  <TouchableOpacity key={unit.id}
-                    onPress={this.send}>
-                    <Text style={{marginVertical: 5}}>{unit.name}</Text>
-                  </TouchableOpacity>
-                ))}
-                </ListItem>
-              </List>
-              <TouchableHighlight
-                style={styles.openButton }
-                onPress={() => {
-                  this.setModalVisible(!modalVisible);
-                }}
-              >
-                <Text style={styles.textStyle}>Cancel</Text>
-              </TouchableHighlight>
+        <View>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert('you did not send the request');
+            }}>
+            <View style={styles.modalView}>
+              <View>
+                <List>
+                  <ListItem
+                    style={{
+                      alignItems: "center",
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                    }}>
+                    {this.state.responseUnit.map((unit) => (
+                      <TouchableOpacity key={unit.id} onPress={this.send}>
+                        <Text style={{marginVertical: 5}}>{unit.name}</Text>
+                      </TouchableOpacity>
+                    ))}
+                  </ListItem>
+                </List>
+                <TouchableHighlight
+                  style={styles.openButton}
+                  onPress={() => {
+                    this.setModalVisible(!modalVisible);
+                  }}>
+                  <Text style={styles.textStyle}>Cancel</Text>
+                </TouchableHighlight>
+              </View>
             </View>
-          </View>
-        </Modal>
-      </View>
+          </Modal>
+        </View>
       </View>
     );
   }

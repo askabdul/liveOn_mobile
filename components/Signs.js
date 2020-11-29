@@ -12,7 +12,7 @@ export default class Signs extends React.Component {
               <Icon
                 name="arrow-left"
                 type="FontAwesome"
-                style={{padding: 20, fontSize: 18, color: "#fff"}}
+                style={{padding: 20, fontSize: 18, color: "#000"}}
                 onPress={() => this.props.navigation.goBack()}
               />
               <Body>

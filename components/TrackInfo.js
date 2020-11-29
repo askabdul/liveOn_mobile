@@ -1,7 +1,7 @@
 import React from "react";
 
 import {View, StyleSheet, TouchableOpacity, Dimensions } from "react-native"
-import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView, {Marker} from 'react-native-maps';
 import AsyncStorage from "@react-native-community/async-storage"
 import Geolocation from "@react-native-community/geolocation";
 // navigator.geolocation = require('@react-native-community/geolocation');
@@ -14,6 +14,10 @@ import convertDistance from 'geolib/es/convertDistance';
 import services from "./../services";
 import {Icon } from "native-base";
 import { log } from "react-native-reanimated";
+const { width, height } = Dimensions.get("window");
+const ASPECT_RATIO = width / height;
+const LATITUDE_DELTA = 0.03;
+const LONGITUDE_DELTA = ASPECT_RATIO * LATITUDE_DELTA
 
 
 export default class TrackInfo extends React.Component {
@@ -21,9 +25,12 @@ export default class TrackInfo extends React.Component {
         super(props)
     
         this.state = {
-             latitude: 0,
-             longitude: 0,
-             error: null
+             initialRegion: {
+                 latitude: 0,
+                 longitude: 0,
+                 latitudeDelta: 0,
+                 longitudeDelta: 0
+             }
         }
     }
 
@@ -31,30 +38,31 @@ export default class TrackInfo extends React.Component {
         Geolocation.getCurrentPosition(position => {
             const lat = parseFloat(position.coords.latitude)
             const lng = parseFloat(position.coords.longitude)
+            // console.log(position);
            this.setState({
-               latitude: lat,
-               longitude: lng,
-               error: null
+               initialRegion : {
+                   latitude: lat,
+                   longitude: lng,
+                   latitudeDelta: LATITUDE_DELTA,
+                   longitudeDelta: LONGITUDE_DELTA
+               }
            })
+           console.log(this.state);
            
-        }, error => this.setState({error: error.message}),
+        }, error => console.log(error),
         {enableHighAccuracy: true, timeout: 20000, maximumAge: 2000}
         );
     }
     
 
     render() {
+        const {initialRegion} = this.state
         return (
             <View style={styles.container}>
                 
             <MapView
                 style={styles.map}
-                initialRegion={{
-                    latitude: this.state.latitude,
-                    longitude: this.state.longitude,
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421,
-                }}
+                initialRegion={initialRegion}
                 showsUserLocation={true}
                 >
                     <Marker coordinate={this.state} />

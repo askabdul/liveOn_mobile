@@ -14,8 +14,8 @@ export default class Register extends React.Component {
     super(props)
   
     this.state = {
-       firstName: "",
-       lastName: "",
+       firstname: "",
+       lastname: "",
        email: "",
        password: "",
        phone: ""
@@ -23,12 +23,12 @@ export default class Register extends React.Component {
   }
 
   signUp = () => {
-    if(this.state.firstName === ''){
+    if(this.state.firstname === ''){
 			Toast.show({
                 text: "First Name required",
                 position: "bottom"
             })
-		}else if(this.state.lastName === ''){
+		}else if(this.state.lastname === ''){
 			Toast.show({
                 text: "Last Name required",
                 position: "bottom"
@@ -51,8 +51,8 @@ export default class Register extends React.Component {
 		} else {
         this.refs.loading.show()
         services.axios.post(services.endpoints.SIGNUP,{
-				  firstName: this.state.firstName,
-			  	lastName: this.state.lastName,
+				  firstname: this.state.firstname,
+			  	lastname: this.state.lastname,
 			  	password: this.state.password,
           email: this.state.email,
           phone: this.state.phone,
@@ -63,8 +63,8 @@ export default class Register extends React.Component {
 					AsyncStorage.setItem('isAuth', 'true')
           this.props.navigation.navigate('Verify')
           this.setState({
-            firstName: '',
-            lastName: '',
+            firstname: '',
+            lastname: '',
             password: '',
             email: '',
             phone: '',
@@ -72,7 +72,10 @@ export default class Register extends React.Component {
         }
       }).catch((err) => {
         if(err.response){
-					alert(err.response.data.error.message)
+          Toast.show({
+            text: err.response.data.error.message,
+            position: "bottom"
+        })
 					console.log(err)
 					this.refs.loading.close()
 				}
@@ -98,8 +101,8 @@ export default class Register extends React.Component {
           </View> */}
           <View>
             <TextInput
-              onChangeText = {(firstName) => this.setState({firstName})}
-              value = { this.state.firstName }
+              onChangeText = {(firstname) => this.setState({firstname})}
+              value = { this.state.firstname }
               placeholder="First Name"
               placeholderTextColor="#B7B9B9"
               style={{
@@ -113,8 +116,8 @@ export default class Register extends React.Component {
             />
     
             <TextInput
-            onChangeText = {(lastName) => this.setState({lastName})}
-            value = { this.state.lastName }
+            onChangeText = {(lastname) => this.setState({lastname})}
+            value = { this.state.lastname }
               placeholder="Last Name"
               placeholderTextColor="#B7B9B9"
               style={{
@@ -131,6 +134,7 @@ export default class Register extends React.Component {
               onChangeText = {(email) => this.setState({email})}
               value = { this.state.email }
               placeholder="Email"
+              autoCapitalize='none'
               keyboardType={'email-address'}
               placeholderTextColor="#B7B9B9"
               style={{

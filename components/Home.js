@@ -7,8 +7,6 @@ function Home({navigation}) {
     return (
       <Container
         style={{backgroundColor: '#F0EFEF', flex: 1, justifyContent: 'center'}}>
-        {/* <Header Title="this is it"/> */}
-        {/* <Content style={{marginVertical: 200}}> */}
         <View
           style={{
             flexDirection: 'row',
@@ -19,10 +17,10 @@ function Home({navigation}) {
           <Button
             vertical
             style={{backgroundColor: 'white', padding: 20, margin: 10}}
-            onPress={() => navigation.navigate('Signs', { screen: 'Home' })}
+            onPress={() => navigation.navigate('Signs')}
             >
             <Icon
-              name="home"
+              name="book"
               type="FontAwesome"
               style={{color: '#1AA08A', fontSize: 50, padding: 10}}
             />
@@ -41,7 +39,8 @@ function Home({navigation}) {
           </Button>
           <Button
             vertical
-            style={{backgroundColor: 'white', padding: 30, margin: 10}}>
+            style={{backgroundColor: 'white', padding: 30, margin: 10}}
+            onPress={() => navigation.navigate('Cases')}>
             <Icon
               active
               name="list"
@@ -52,7 +51,8 @@ function Home({navigation}) {
           </Button>
           <Button
             vertical
-            style={{backgroundColor: 'white', padding: 30, margin: 10}}>
+            style={{backgroundColor: 'white', padding: 30, margin: 10}}
+            onPress={() => navigation.navigate('Settings')}>
             <Icon
               name="cog"
               type="FontAwesome"

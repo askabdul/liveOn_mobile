@@ -1,6 +1,7 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+navigator.geolocation = require('@react-native-community/geolocation');
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Verify from './components/Verify';
@@ -20,7 +21,9 @@ export default function App() {
         <RootStack.Screen
           name="Login"
           component={Login}
-          options={{headerLeft: null}}
+          options={{headerLeft: null,
+            headerShown: false,
+          }}
         />
         <RootStack.Screen
           name="Signup"
